@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Header from './components/Header';
 import ToDoItem from './components/ToDoItem';
+import AddToDo from './components/AddToDo';
 
 export default function App() {
   const [todos, setTodos] = useState([
@@ -28,12 +29,22 @@ export default function App() {
     });
   };
 
+  const submitHandler = (text) => {
+    setTodos((prevToDos) => {
+      return [
+        { text: text, id: Math.random().toString() },
+        ...prevToDos, //... is a spread operator
+      ];
+    });
+  };
+
   return (
     <View style={styles.container}>
       {/*Header */}
       <Header />
       <View style={styles.content}>
         {/*to form */}
+        <AddToDo submitHandler={submitHandler} />
         <View style={styles.list}>
           <FlatList
             data={todos}
