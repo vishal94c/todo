@@ -2,13 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
-  Button,
-  TextInput,
-  ScrollView,
   FlatList,
-  TouchableOpacity,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import Header from './components/Header';
 import ToDoItem from './components/ToDoItem';
@@ -30,32 +28,48 @@ export default function App() {
   };
 
   const submitHandler = (text) => {
-    setTodos((prevToDos) => {
-      return [
-        { text: text, id: Math.random().toString() },
-        ...prevToDos, //... is a spread operator
-      ];
-    });
+    if (text.length > 3) {
+      setTodos((prevToDos) => {
+        return [
+          { text: text, id: Math.random().toString() },
+          ...prevToDos, //... is a spread operator
+        ];
+      });
+    } else {
+      Alert.alert('Error', 'Must be over 3 characters long', [
+        {
+          text: 'OK',
+          onPress: () => console.log('alert closed'),
+        },
+      ]);
+    }
   };
 
   return (
-    <View style={styles.container}>
-      {/*Header */}
-      <Header />
-      <View style={styles.content}>
-        {/*to form */}
-        <AddToDo submitHandler={submitHandler} />
-        <View style={styles.list}>
-          <FlatList
-            data={todos}
-            keyExtractor={(Item) => Item.id}
-            renderItem={({ item }) => (
-              <ToDoItem item={item} pressHandler={pressHandler} />
-            )}
-          />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss;
+        console.log('keyboard closed');
+      }}
+    >
+      <View style={styles.container}>
+        {/*Header */}
+        <Header />
+        <View style={styles.content}>
+          {/*to form */}
+          <AddToDo submitHandler={submitHandler} />
+          <View style={styles.list}>
+            <FlatList
+              data={todos}
+              keyExtractor={(Item) => Item.id}
+              renderItem={({ item }) => (
+                <ToDoItem item={item} pressHandler={pressHandler} />
+              )}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
