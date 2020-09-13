@@ -10,38 +10,40 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import Header from './components/Header';
+import ToDoItem from './components/ToDoItem';
 
 export default function App() {
-  const [people, setPeople] = useState([
-    { name: 'vishal', id: '1' },
-    { name: 'thanos', id: '2' },
-    { name: 'pinky', id: '3' },
-    { name: 'katie', id: '4' },
-    { name: 'cathrine', id: '5' },
-    { name: 'random', id: '6' },
-    { name: 'mouse', id: '7' },
-    { name: 'keyboards', id: '8' },
+  const [todos, setTodos] = useState([
+    { text: 'Clean Room', id: '1' },
+    { text: 'Drink COffee', id: '2' },
+    { text: 'Pastor Nina', id: '3' },
+    { text: 'Astro Food', id: '4' },
+    { text: 'Sad Song', id: '5' },
   ]);
 
-  const PressHandler = (id) => {
-    console.log(id);
-    setPeople((prevPeople) => {
-      return prevPeople.filter((people) => people.id != id);
+  const pressHandler = (id) => {
+    setTodos((prevToDos) => {
+      return prevToDos.filter((todos) => todos.id != id);
     });
   };
 
   return (
     <View style={styles.container}>
-      <FlatList
-        numColumns={2}
-        keyExtractor={(Item) => Item.id}
-        data={people}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => PressHandler(item.id)}>
-            <Text style={styles.item}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
+      {/*Header */}
+      <Header />
+      <View style={styles.content}>
+        {/*to form */}
+        <View style={styles.list}>
+          <FlatList
+            data={todos}
+            keyExtractor={(Item) => Item.id}
+            renderItem={({ item }) => (
+              <ToDoItem item={item} pressHandler={pressHandler} />
+            )}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -50,17 +52,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 40,
-    paddingHorizontal: 20,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
-  item: {
-    marginTop: 24,
-    padding: 20,
-    backgroundColor: 'pink',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginHorizontal: 5,
+  content: {
+    padding: 40,
+  },
+  list: {
+    marginTop: 20,
   },
 });
