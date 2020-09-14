@@ -48,7 +48,7 @@ export default function App() {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        Keyboard.dismiss;
+        Keyboard.dismiss();
         console.log('keyboard closed');
       }}
     >
@@ -79,9 +79,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
+    flex: 1,
     padding: 40,
   },
   list: {
+    flex: 1,
     marginTop: 20,
   },
 });

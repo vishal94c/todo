@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
 export default function Header() {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
         <Text style={styles.title}>todo from Header</Text>
       </View>
@@ -14,7 +14,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   header: {
-    height: 40,
+    // height: 40,
     padding: 5,
     backgroundColor: 'coral',
   },
@@ -24,5 +24,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     // padding: 10,
+  },
+  safe: {
+    backgroundColor: 'coral',
   },
 });
